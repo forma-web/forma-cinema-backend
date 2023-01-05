@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use App\Filters\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Movie extends Model
+class Series extends Model
 {
-    use HasFactory, Filterable;
+    use HasFactory;
 }

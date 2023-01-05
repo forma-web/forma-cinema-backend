@@ -2,20 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\MovieFilter;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Models\Movie;
 
 class MovieController extends Controller
 {
+    // Continue watching
+    // Last added
+    // Most popular
+    // Top rated
+    // By genre
+    // By country
+    // By year
+    // By age restrictions
+    // By duration
+    // By kinopoisk rating
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function index()
+    public function index(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        //
+        return Movie::latest()->paginate(20);
     }
 
     /**
