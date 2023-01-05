@@ -24,6 +24,14 @@ class MovieFactory extends Factory
         'Бойцовский клуб',
     ];
 
+    private const URLS = [
+        'MVI_6513.MOV',
+        'Погоня.mp4',
+        'MVI_9891.MOV',
+        'PFSC.mp4',
+        'Огонёк.mp4',
+    ];
+
     /**
      * Define the model's default state.
      *
@@ -42,7 +50,7 @@ class MovieFactory extends Factory
             'logline' => fake()->sentence(),
             'description' => fake()->paragraph(),
             'poster' => fake()->imageUrl(randomize: false, word: $movie),
-            'trailer' => fake()->url(),
+            'trailer' => urlencode('http://192.168.1.3/movies/' . fake()->randomElement(self::URLS)),
             'kinopoisk_id' => fake()->numberBetween(1, 100000),
             'kinopoisk_rating' => fake()->randomFloat(1, 0, 10),
         ];

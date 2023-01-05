@@ -12,6 +12,29 @@
 
 namespace App\Models{
 /**
+ * App\Models\Genre
+ *
+ * @method static \Database\Factories\GenreFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Genre newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Genre newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Genre query()
+ */
+	class Genre extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\GenreMovie
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|GenreMovie newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|GenreMovie newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|GenreMovie query()
+ */
+	class GenreMovie extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\Movie
  *
  * @property int $id
@@ -20,7 +43,7 @@ namespace App\Models{
  * @property string|null $country
  * @property string|null $age_restrictions
  * @property int $duration
- * @property string|null $longline
+ * @property string|null $logline
  * @property string|null $description
  * @property string|null $poster
  * @property string|null $trailer
@@ -41,7 +64,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereKinopoiskId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereKinopoiskRating($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Movie whereLongline($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Movie whereLogline($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie wherePoster($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereTrailer($value)
