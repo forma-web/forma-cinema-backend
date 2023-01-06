@@ -9,6 +9,30 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class GenreFactory extends Factory
 {
+    private const GENRES = [
+        'Боевик',
+        'Вестерн',
+        'Военный',
+        'Детектив',
+        'Детский',
+        'Документальный',
+        'Драма',
+        'Исторический',
+        'Комедия',
+        'Криминал',
+        'Мелодрама',
+        'Мистика',
+        'Музыка',
+        'Мультфильм',
+        'Приключения',
+        'Семейный',
+        'Спорт',
+        'Триллер',
+        'Ужасы',
+        'Фантастика',
+        'Фэнтези',
+    ];
+
     /**
      * Define the model's default state.
      *
@@ -17,7 +41,7 @@ class GenreFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => fake()->randomElement(self::GENRES),
         ];
     }
 }

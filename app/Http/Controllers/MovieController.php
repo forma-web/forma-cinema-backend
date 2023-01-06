@@ -22,11 +22,11 @@ class MovieController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|\App\Models\Movie[]
      */
-    public function index(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    public function index(): \Illuminate\Support\Collection
     {
-        return Movie::latest()->paginate(20);
+        return Movie::latest()->with('genres')->get();
     }
 
     /**

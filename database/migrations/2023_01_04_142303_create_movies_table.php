@@ -23,10 +23,11 @@ return new class extends Migration
             $table->unsignedBigInteger('duration');
             $table->text('logline')->nullable();
             $table->text('description')->nullable();
-            $table->string('poster')->nullable();
+            // TODO: Replace string length
+            $table->string('poster', 1000)->nullable();
             $table->string('trailer')->nullable();
             $table->string('kinopoisk_id')->nullable();
-            $table->string('kinopoisk_rating')->nullable();
+            $table->unsignedFloat('kinopoisk_rating')->nullable();
             $table->timestamps();
         });
     }

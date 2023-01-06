@@ -12,4 +12,11 @@ class GenreMovie extends Pivot
      * @var bool
      */
     public $incrementing = true;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'genres_movies';
 }
