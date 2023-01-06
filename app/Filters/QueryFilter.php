@@ -32,10 +32,9 @@ abstract class QueryFilter
     {
         $this->builder = $builder;
 
-        foreach ($this->filters() as $name => $value) {
+        $queryParameters = $this->getQueryParameters();
 
-            /** @var string $name */
-
+        foreach ($queryParameters as $name => $value) {
             if (method_exists($this, $name)) {
                 call_user_func_array([$this, $name], array_filter([$value]));
             }
@@ -45,18 +44,40 @@ abstract class QueryFilter
     }
 
     /**
-     * @return array|string|null
+     * @return Array<string, string | null>
      */
-    private function filters(): array|string|null
+    private function getQueryParameters(): array
     {
+        /** @var Array<string, string | null> $query */
         $query = $this->request->query();
 
+        $this->validateQueryParameters($query);
+
+        return $query;
+    }
+
+    /**
+     * @param Array<string, string | null> $query
+     * @return void
+     */
+    private function validateQueryParameters(array $query): void
+    {
         abort_if(
             self::MAX_FILTERS !== null && count($query) > self::MAX_FILTERS,
-            400,
+            422,
             'Too many filters'
         );
 
-        return $query;
+        $validator = validator($query, $this->rules());
+
+        abort_if($validator->fails(), 422, $validator->errors());
+    }
+
+    /**
+     * @return array
+     */
+    protected function rules(): array
+    {
+        return [];
     }
 }

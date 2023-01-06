@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\MovieFilter;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Models\Movie;
+use Illuminate\Support\Collection;
 
 class MovieController extends Controller
 {
@@ -19,14 +21,9 @@ class MovieController extends Controller
     // By duration
     // By kinopoisk rating
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|\App\Models\Movie[]
-     */
-    public function index(): \Illuminate\Support\Collection
+    public function index(MovieFilter $filter): Collection
     {
-        return Movie::latest()->with('genres')->get();
+        return Movie::filter($filter)->with('genres')->latest()->get();
     }
 
     /**
