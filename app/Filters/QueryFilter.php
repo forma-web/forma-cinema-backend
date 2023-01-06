@@ -10,7 +10,7 @@ abstract class QueryFilter
     /**
      * @var int|null
      */
-    protected const MAX_FILTERS = 10;
+    protected const MAX_FILTERS = 5;
 
     protected Request $request;
 

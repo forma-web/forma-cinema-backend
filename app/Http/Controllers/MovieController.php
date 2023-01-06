@@ -6,24 +6,16 @@ use App\Filters\MovieFilter;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Models\Movie;
-use Illuminate\Support\Collection;
 
 class MovieController extends Controller
 {
-    // Continue watching
-    // Last added
-    // Most popular
-    // Top rated
-    // By genre
-    // By country
-    // By year
-    // By age restrictions
-    // By duration
-    // By kinopoisk rating
-
-    public function index(MovieFilter $filter): Collection
+    public function index(MovieFilter $filter): \Illuminate\Contracts\Pagination\CursorPaginator
     {
-        return Movie::filter($filter)->with('genres')->latest()->get();
+        return Movie::filter($filter)
+            ->with('genres')
+            ->orderBy('id')
+            ->latest()
+            ->cursorPaginate();
     }
 
     /**

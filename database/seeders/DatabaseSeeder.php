@@ -16,10 +16,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Movie::factory()
-            ->has(Genre::factory()->count(3))
-            ->count(10)
-            ->create();
+        foreach (range(1, 5) as $i) {
+            $genres = Genre::factory()->count(2)->create();
+
+            Movie::factory()
+                ->count(10)
+                ->hasAttached($genres)
+                ->create();
+
+        }
+
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

@@ -10,9 +10,9 @@ class MovieFilter extends QueryFilter
     protected function rules(): array
     {
         return [
-            'minYear' => ['nullable', 'integer', 'min:1900', 'max:2100'],
-            'maxYear' => ['nullable', 'integer', 'min:1900', 'max:2100'],
-            'genres' => ['nullable', new Delimited('numeric')],
+            'minYear' => ['numeric', 'min:1900', 'max:2100'],
+            'maxYear' => ['numeric', 'min:1900', 'max:2100'],
+            'genres' => ['string', new Delimited('numeric')],
         ];
     }
 
@@ -32,6 +32,15 @@ class MovieFilter extends QueryFilter
     public function maxYear(int $year): Builder
     {
         return $this->builder->where('year', '<=', $year);
+    }
+
+    /**
+     * @param string $country
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function country(string $country): Builder
+    {
+        return $this->builder->where('country', $country);
     }
 
     /**
