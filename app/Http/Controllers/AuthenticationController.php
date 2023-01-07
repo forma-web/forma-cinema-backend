@@ -6,6 +6,9 @@ use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegistrationUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 
 class AuthenticationController extends Controller
@@ -14,7 +17,7 @@ class AuthenticationController extends Controller
      * @param \App\Http\Requests\RegistrationUserRequest $request
      * @return \App\Http\Resources\UserResource
      */
-    public function registration(RegistrationUserRequest $request): UserResource
+    public function register(RegistrationUserRequest $request): UserResource
     {
         $credentials = collect($request->validated());
 
@@ -27,11 +30,17 @@ class AuthenticationController extends Controller
         /** @var string $token */
         $token = auth()->login($user);
 
-        return (new UserResource($user))->additional([
+        event(new Registered($user));
+
+        return $this->current()->additional([
             'meta' => $this->withToken($token)
         ]);
     }
 
+    /**
+     * @param \App\Http\Requests\LoginUserRequest $request
+     * @return \App\Http\Resources\UserResource
+     */
     public function login(LoginUserRequest $request): UserResource
     {
         $credentials = collect($request->validated());
@@ -42,7 +51,7 @@ class AuthenticationController extends Controller
             'Unauthorized'
         );
 
-        return (new UserResource(auth()->user()))->additional([
+        return $this->current()->additional([
             'meta' => $this->withToken($token)
         ]);
     }
@@ -66,16 +75,41 @@ class AuthenticationController extends Controller
     }
 
     /**
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function refresh(): void
+    public function refresh(): JsonResponse
     {
         /** @var string $token */
         $token = auth()->refresh();
 
-        response()->json([
+        return response()->json([
             'meta' => $this->withToken($token)
         ]);
+    }
+
+    /**
+     * @param \Illuminate\Foundation\Auth\EmailVerificationRequest $request
+     * @return void
+     */
+    public function verify(EmailVerificationRequest $request): void
+    {
+        $request->fulfill();
+
+        response()->noContent();
+    }
+
+    /**
+     * @return void
+     */
+    public function resend(): void
+    {
+        /** @var User $user */
+        $user = auth()->user();
+
+        if (! $user->hasVerifiedEmail())
+            auth()->user()->sendEmailVerificationNotification();
+
+        response()->noContent();
     }
 
     /**
