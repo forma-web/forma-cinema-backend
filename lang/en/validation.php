@@ -40,6 +40,11 @@ return [
     'decimal' => 'The :attribute must have :decimal decimal places.',
     'declined' => 'The :attribute must be declined.',
     'declined_if' => 'The :attribute must be declined when :other is :value.',
+    'delimited' => [
+        'unique' => 'You may not specify duplicates.',
+        'min' => 'You must specify at least :min :item',
+        'max' => 'You can only specify :max :item',
+    ],
     'different' => 'The :attribute and :other must be different.',
     'digits' => 'The :attribute must be :digits digits.',
     'digits_between' => 'The :attribute must be between :min and :max digits.',

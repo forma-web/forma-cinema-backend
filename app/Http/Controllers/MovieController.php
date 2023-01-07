@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\MovieFilter;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Models\Movie;
 
 class MovieController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(MovieFilter $filter): \Illuminate\Contracts\Pagination\CursorPaginator
     {
-        //
+        return Movie::filter($filter)
+            ->with('genres')
+            ->orderBy('id')
+            ->latest()
+            ->cursorPaginate();
     }
 
     /**

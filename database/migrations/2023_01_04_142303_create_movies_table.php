@@ -21,12 +21,13 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->enum('age_restrictions', RussianAgesEnum::values())->nullable();
             $table->unsignedBigInteger('duration');
-            $table->text('longline')->nullable();
+            $table->text('logline')->nullable();
             $table->text('description')->nullable();
-            $table->string('poster')->nullable();
+            // TODO: Replace string length
+            $table->string('poster', 1000)->nullable();
             $table->string('trailer')->nullable();
             $table->string('kinopoisk_id')->nullable();
-            $table->string('kinopoisk_rating')->nullable();
+            $table->unsignedFloat('kinopoisk_rating')->nullable();
             $table->timestamps();
         });
     }

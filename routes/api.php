@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::apiResource('movies', \App\Http\Controllers\MovieController::class);
+
 Route::controller(AuthenticationController::class)
     ->prefix('auth')
     ->as('auth.')
