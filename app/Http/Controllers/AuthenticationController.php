@@ -10,6 +10,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthenticationController extends Controller
 {
@@ -47,8 +48,8 @@ class AuthenticationController extends Controller
 
         abort_if(
             !$token = auth()->attempt($credentials->all()),
-            401,
-            'Unauthorized'
+            Response::HTTP_UNAUTHORIZED,
+            __('auth.failed'),
         );
 
         return $this->current()->additional([

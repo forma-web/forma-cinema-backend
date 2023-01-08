@@ -13,8 +13,8 @@ class LoginUserRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email', 'max:255', 'exists:users'],
-            'password' => ['required', 'string', Password::min(8)],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string', Password::min(8), 'max:255'],
         ];
     }
 }

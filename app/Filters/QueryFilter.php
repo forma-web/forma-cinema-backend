@@ -4,6 +4,7 @@ namespace App\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 abstract class QueryFilter
 {
@@ -64,13 +65,13 @@ abstract class QueryFilter
     {
         abort_if(
             self::MAX_FILTERS !== null && count($query) > self::MAX_FILTERS,
-            422,
+            Response::HTTP_UNPROCESSABLE_ENTITY,
             'Too many filters'
         );
 
         $validator = validator($query, $this->rules());
 
-        abort_if($validator->fails(), 422, $validator->errors());
+        abort_if($validator->fails(), Response::HTTP_UNPROCESSABLE_ENTITY, $validator->errors());
     }
 
     /**

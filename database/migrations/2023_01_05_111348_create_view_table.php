@@ -15,11 +15,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('view', function (Blueprint $table) {
+        Schema::create('views', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Series::class);
-            $table->bigInteger('offset')->nullable();
+            $table->unsignedBigInteger('seek')->nullable();
             $table->boolean('finished')->default(false);
             $table->timestamps();
         });

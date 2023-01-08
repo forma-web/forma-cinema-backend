@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,9 +21,9 @@ Route::controller(AuthenticationController::class)
     ->as('auth.')
     ->group(function () {
         Route::post('register', 'register')->name('register');
-        Route::post('login', 'login')->name('login');
-        Route::post('logout', 'logout')->name('logout');
-        Route::get('me', 'me')->name('me');
+
+       Route::post('login', 'login')->name('login');
+       Route::post('logout', 'logout')->name('logout');
 
         Route::middleware('auth')->group(function () {
             Route::get('me', 'current')->name('me');
@@ -39,4 +40,9 @@ Route::controller(AuthenticationController::class)
         });
     });
 
-Route::apiResource('movies', MovieController::class);
+Route::middleware('auth')->group(function () {
+    Route::apiResource('movies', MovieController::class);
+    Route::get('views', ViewController::class)->name('views');
+});
+
+
