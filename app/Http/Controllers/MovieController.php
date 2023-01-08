@@ -6,10 +6,11 @@ use App\Filters\MovieFilter;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Models\Movie;
+use Illuminate\Contracts\Pagination\CursorPaginator;
 
 class MovieController extends Controller
 {
-    public function index(MovieFilter $filter): \Illuminate\Contracts\Pagination\CursorPaginator
+    public function index(MovieFilter $filter): CursorPaginator
     {
         return Movie::filter($filter)
             ->with('genres')

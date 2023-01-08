@@ -26,13 +26,14 @@ class DatabaseSeeder extends Seeder
                 ->has(Series::factory()->count(10))
                 ->hasAttached($genres)
                 ->create();
-
-            User::factory(5)
-                ->hasAttached(Series::all(), [
-                    'seek' => fake()->numberBetween(0, 100) * 60,
-                    'finished' => fake()->boolean(50),
-                ], 'views')
-                ->create();
         }
+
+        User::factory()
+            ->count(10)
+            ->hasAttached(Series::find(1), [
+                'seek' => fake()->numberBetween(0, 100) * 60,
+                'finished' => true,
+            ], 'views')
+            ->create();
     }
 }
