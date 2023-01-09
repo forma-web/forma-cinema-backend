@@ -5,82 +5,68 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreGenreRequest;
 use App\Http\Requests\UpdateGenreRequest;
 use App\Models\Genre;
+use Illuminate\Contracts\Pagination\CursorPaginator;
+use Illuminate\Http\Response;
 
 class GenreController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Pagination\CursorPaginator
      */
-    public function index()
+    public function index(): CursorPaginator
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Genre::orderBy('id')->cursorPaginate();
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreGenreRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Models\Genre|\Illuminate\Database\Eloquent\Model
      */
     public function store(StoreGenreRequest $request)
     {
-        //
+        return Genre::create($request->validated());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Genre  $genre
-     * @return \Illuminate\Http\Response
+     * @param int $genre
+     * @return \App\Models\Genre
      */
-    public function show(Genre $genre)
+    public function show(int $genre): Genre
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Genre  $genre
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Genre $genre)
-    {
-        //
+        return Genre::findOrFail($genre);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateGenreRequest  $request
-     * @param  \App\Models\Genre  $genre
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\UpdateGenreRequest $request
+     * @param int $genre
+     * @return \App\Models\Genre
      */
-    public function update(UpdateGenreRequest $request, Genre $genre)
+    public function update(UpdateGenreRequest $request, int $genre): Genre
     {
-        //
+        $genre = Genre::findOrFail($genre);
+        $genre->update($request->validated());
+
+        return $genre;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Genre  $genre
+     * @param int $genre
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Genre $genre)
+    public function destroy(int $genre): Response
     {
-        //
+        Genre::findOrFail($genre)->delete();
+
+        return response()->noContent();
     }
 }

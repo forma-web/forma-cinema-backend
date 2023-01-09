@@ -11,7 +11,6 @@ class GenreFactory extends Factory
 {
     private const GENRES = [
         'Боевик',
-        'Вестерн',
         'Военный',
         'Детектив',
         'Детский',

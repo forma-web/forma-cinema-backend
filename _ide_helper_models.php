@@ -71,6 +71,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Genre[] $genres
  * @property-read int|null $genres_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $series
+ * @property-read int|null $series_count
  * @method static \Database\Factories\MovieFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie filter(\App\Filters\QueryFilter $filters)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie newModelQuery()
@@ -98,9 +100,15 @@ namespace App\Models{
 /**
  * App\Models\MovieSelection
  *
+ * @property int $id
+ * @property int $movie_id
+ * @property int $selection_id
  * @method static \Illuminate\Database\Eloquent\Builder|MovieSelection newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MovieSelection newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MovieSelection query()
+ * @method static \Illuminate\Database\Eloquent\Builder|MovieSelection whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MovieSelection whereMovieId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MovieSelection whereSelectionId($value)
  */
 	class MovieSelection extends \Eloquent {}
 }
@@ -135,8 +143,9 @@ namespace App\Models{
  *
  * @property int $id
  * @property int $movie_id
- * @property string $name
+ * @property string|null $name
  * @property string|null $description
+ * @property string|null $image
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Database\Factories\SeriesFactory factory(...$parameters)
@@ -146,6 +155,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Series whereImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereMovieId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Series whereUpdatedAt($value)
@@ -168,7 +178,10 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $views
+ * @property-read int|null $views_count
  * @method static \Database\Factories\UserFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|User filter(\App\Filters\QueryFilter $filters)
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
@@ -192,7 +205,7 @@ namespace App\Models{
  * @property int $id
  * @property int $user_id
  * @property int $series_id
- * @property int|null $offset
+ * @property int|null $seek
  * @property bool $finished
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -202,7 +215,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|View whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|View whereFinished($value)
  * @method static \Illuminate\Database\Eloquent\Builder|View whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|View whereOffset($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|View whereSeek($value)
  * @method static \Illuminate\Database\Eloquent\Builder|View whereSeriesId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|View whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|View whereUserId($value)

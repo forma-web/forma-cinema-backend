@@ -12,4 +12,11 @@ class MovieSelection extends Pivot
      * @var bool
      */
     public $incrementing = true;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'movies_selections';
 }

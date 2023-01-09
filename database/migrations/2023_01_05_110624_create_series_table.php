@@ -17,8 +17,9 @@ return new class extends Migration
         Schema::create('series', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Movie::class);
-            $table->string('name');
-            $table->string('description')->nullable();
+            $table->string('name')->nullable();
+            $table->string('description', 1000)->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
