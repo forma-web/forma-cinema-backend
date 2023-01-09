@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\SelectionController;
 use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,7 @@ Route::controller(AuthenticationController::class)
     });
 
 Route::middleware('auth')->group(function () {
+    Route::apiResource('selections', SelectionController::class);
     Route::apiResource('genres', GenreController::class);
     Route::apiResource('movies', MovieController::class);
     Route::get('views', ViewController::class)->name('views');

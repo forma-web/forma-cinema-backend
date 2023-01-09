@@ -5,17 +5,22 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSelectionRequest;
 use App\Http\Requests\UpdateSelectionRequest;
 use App\Models\Selection;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
 class SelectionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function index()
+    public function index(): Collection
     {
-        //
+        /** @var User $user */
+        $user = auth()->user();
+
+        return $user->selections()->get();
     }
 
     /**
