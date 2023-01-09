@@ -14,7 +14,7 @@ class ViewController extends Controller
     /**
      * @return string
      */
-    public function __invoke()
+    public function __invoke(): CursorPaginator
     {
         /** @var User $user */
         $user = auth()->user();
@@ -23,12 +23,13 @@ class ViewController extends Controller
 
         $views = $user
             ->views()
+            ->with('movie')
             ->orderByPivot('created_at', 'desc')
             ->orderByPivot('id');
 
         if ($mode === ViewModesEnum::CONTINUE->value)
-            return $views->wherePivot('finished', false)->get();
+            $views = $views->wherePivot('finished', false);
 
-        return $views->get();
+        return $views->cursorPaginate();
     }
 }

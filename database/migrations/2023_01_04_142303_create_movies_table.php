@@ -26,7 +26,7 @@ return new class extends Migration
             // TODO: Replace string length
             $table->string('poster', 1000)->nullable();
             $table->string('trailer')->nullable();
-            $table->string('kinopoisk_id')->nullable();
+            $table->unsignedBigInteger('kinopoisk_id')->nullable();
             $table->unsignedFloat('kinopoisk_rating')->nullable();
             $table->timestamps();
         });
