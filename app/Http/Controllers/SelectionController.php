@@ -30,7 +30,7 @@ class SelectionController extends Controller
      * @param  \App\Http\Requests\StoreSelectionRequest  $request
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function store(StoreSelectionRequest $request)
+    public function store(StoreSelectionRequest $request): Model
     {
         /** @var User $user */
         $user = auth()->user();
