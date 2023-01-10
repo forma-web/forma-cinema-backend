@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         foreach (range(1, 3) as $i) {
-            $genres = Genre::factory()->count(2)->create();
+            $genres = Genre::factory()->count(20)->create();
 
             Movie::factory()
                 ->count(10)

@@ -16,7 +16,7 @@ class MovieController extends Controller
             ->with('genres')
             ->orderBy('id')
             ->latest()
-            ->cursorPaginate();
+            ->cursorPaginate(10);
     }
 
     /**

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSelectionRequest;
 use App\Http\Requests\UpdateSelectionRequest;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\CursorPaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 
@@ -14,14 +14,14 @@ class SelectionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Contracts\Pagination\CursorPaginator
      */
-    public function index(): Collection
+    public function index(): CursorPaginator
     {
         /** @var User $user */
         $user = auth()->user();
 
-        return $user->selections()->get();
+        return $user->selections()->cursorPaginate();
     }
 
     /**

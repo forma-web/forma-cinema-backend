@@ -26,10 +26,10 @@ Route::controller(AuthenticationController::class)
 
        Route::post('login', 'login')->name('login');
        Route::post('logout', 'logout')->name('logout');
+       Route::post('refresh', 'refresh')->name('refresh');
 
         Route::middleware('auth')->group(function () {
             Route::get('me', 'current')->name('me');
-            Route::post('refresh', 'refresh')->name('refresh');
 
             Route::prefix('email')->as('email.')->group(function () {
                 Route::middleware('signed')
