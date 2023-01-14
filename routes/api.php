@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +28,6 @@ Route::controller(AuthenticationController::class)
        Route::post('logout', 'logout')->name('logout');
 
         Route::middleware('auth')->group(function () {
-            Route::get('me', 'current')->name('me');
             Route::post('refresh', 'refresh')->name('refresh');
 
             Route::prefix('email')->as('email.')->group(function () {
@@ -42,6 +42,14 @@ Route::controller(AuthenticationController::class)
     });
 
 Route::middleware('auth')->group(function () {
+
+    Route::prefix('user')
+        ->as('user.')
+        ->group(function () {
+            Route::get('', [AuthenticationController::class, 'current'])->name('current');
+            Route::patch('', [AuthenticationController::class, 'updateCredentials'])->name('update');
+        });
+
     Route::apiResource('genres', GenreController::class);
     Route::apiResource('movies', MovieController::class);
     Route::get('views', ViewController::class)->name('views');

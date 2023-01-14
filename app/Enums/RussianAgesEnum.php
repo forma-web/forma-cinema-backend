@@ -9,5 +9,6 @@ enum RussianAgesEnum : int
     case ZERO = 0;
     case SIX = 6;
     case TWELVE = 12;
+    case SIXTEEN = 16;
     case EIGHTEEN = 18;
 }
