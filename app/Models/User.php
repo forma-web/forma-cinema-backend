@@ -82,4 +82,15 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     {
         return $this->hasMany(Selection::class);
     }
+    
+     * Mark the given user's email as unverified.
+     *
+     * @return bool
+     */
+    public function markEmailAsUnverified()
+    {
+        return $this->forceFill([
+            'email_verified_at' => null,
+        ])->save();
+    }
 }

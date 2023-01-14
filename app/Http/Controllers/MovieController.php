@@ -34,13 +34,14 @@ class MovieController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $movie
+
+     * @param int $id
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function show(int $movie): Model
+    public function show(int $id): Model
     {
         return Movie::with('genres')
-            ->findOrFail($movie);
+            ->findOrFail($id);
     }
 
     /**

@@ -29,8 +29,6 @@ Route::controller(AuthenticationController::class)
        Route::post('refresh', 'refresh')->name('refresh');
 
         Route::middleware('auth')->group(function () {
-            Route::get('me', 'current')->name('me');
-
             Route::prefix('email')->as('email.')->group(function () {
                 Route::middleware('signed')
                     ->get('verify/{id}/{hash}', 'verify')
@@ -44,6 +42,14 @@ Route::controller(AuthenticationController::class)
 
 Route::middleware('auth')->group(function () {
     Route::apiResource('selections', SelectionController::class);
+
+    Route::prefix('user')
+        ->as('user.')
+        ->group(function () {
+            Route::get('', [AuthenticationController::class, 'current'])->name('current');
+            Route::patch('', [AuthenticationController::class, 'updateCredentials'])->name('update');
+        });
+
     Route::apiResource('genres', GenreController::class);
     Route::apiResource('movies', MovieController::class);
     Route::get('views', ViewController::class)->name('views');
