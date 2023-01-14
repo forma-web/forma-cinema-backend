@@ -14,6 +14,16 @@ class Movie extends Model
     use HasFactory, Filterable;
 
     /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
      * The attributes that should be cast.
      *
      * @var array<string, string>
@@ -37,5 +47,13 @@ class Movie extends Model
     public function series(): HasMany
     {
         return $this->hasMany(Series::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function selections(): BelongsToMany
+    {
+        return $this->belongsToMany(Selection::class, MovieSelection::class)->withTimestamps();
     }
 }

@@ -40,7 +40,7 @@ class GenreFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->randomElement(self::GENRES),
+            'name' => fake()->unique()->randomElement(self::GENRES),
         ];
     }
 }

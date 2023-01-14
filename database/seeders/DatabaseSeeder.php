@@ -18,14 +18,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        foreach (range(1, 3) as $i) {
-            $genres = Genre::factory()->count(2)->create();
+        $this->call([
+            MovieSeeder::class,
+        ]);
 
-            Movie::factory()
-                ->count(10)
-                ->has(Series::factory()->count(10))
-                ->hasAttached($genres)
-                ->create();
+        foreach (range(1, 3) as $i) {
+            $genres = Genre::factory()->count(20)->create();
         }
 
         User::factory()

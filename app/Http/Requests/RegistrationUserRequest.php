@@ -14,7 +14,7 @@ class RegistrationUserRequest extends BaseFormRequest
     {
         return [
             'first_name' => ['required', 'string', 'max:255'],
-            'second_name' => ['string', 'max:255'],
+            'last_name' => ['nullable', 'string', 'max:255'],
             'phone' => ['string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', Password::min(8), 'max:255'],

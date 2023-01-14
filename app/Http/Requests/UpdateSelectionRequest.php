@@ -12,7 +12,8 @@ class UpdateSelectionRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['string', 'max:255'],
+            'thumbnail' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

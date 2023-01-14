@@ -35,15 +35,6 @@ class MovieFilter extends QueryFilter
     }
 
     /**
-     * @param string $country
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function country(string $country): Builder
-    {
-        return $this->builder->where('country', $country);
-    }
-
-    /**
      * @param string $genres
      * @return \Illuminate\Database\Eloquent\Builder
      */

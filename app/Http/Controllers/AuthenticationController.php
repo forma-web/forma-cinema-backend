@@ -29,7 +29,7 @@ class AuthenticationController extends Controller
         /** @var string $token */
         $token = auth()->login($user);
 
-        event(new Registered($user));
+        //event(new Registered($user));
 
         return $this->current()->additional([
             'meta' => $this->withToken($token)

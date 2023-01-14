@@ -12,7 +12,8 @@ class StoreSelectionRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'thumbnail' => ['nullable', 'string', 'max:255'],
         ];
     }
 }
