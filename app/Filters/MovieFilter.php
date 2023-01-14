@@ -12,7 +12,6 @@ class MovieFilter extends QueryFilter
         return [
             'minYear' => ['numeric', 'min:1900', 'max:2100'],
             'maxYear' => ['numeric', 'min:1900', 'max:2100'],
-            'selection' => ['numeric', 'exists:selections,id'],
             'genres' => ['string', new Delimited('numeric')],
         ];
     }
@@ -33,17 +32,6 @@ class MovieFilter extends QueryFilter
     public function maxYear(int $year): Builder
     {
         return $this->builder->where('year', '<=', $year);
-    }
-
-    /**
-     * @param int $selectionId
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function selection(int $selectionId): Builder
-    {
-        return $this->builder->whereHas('selections', function (Builder $query) use ($selectionId) {
-            $query->where('selections.id', $selectionId);
-        });
     }
 
     /**

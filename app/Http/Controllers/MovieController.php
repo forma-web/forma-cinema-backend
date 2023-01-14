@@ -7,6 +7,7 @@ use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Models\Movie;
 use Illuminate\Contracts\Pagination\CursorPaginator;
+use Illuminate\Database\Eloquent\Model;
 
 class MovieController extends Controller
 {
@@ -17,16 +18,6 @@ class MovieController extends Controller
             ->orderBy('id')
             ->latest()
             ->cursorPaginate(10);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -43,12 +34,13 @@ class MovieController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Movie  $movie
-     * @return \Illuminate\Http\Response
+     * @param int $movie
+     * @return \Illuminate\Database\Eloquent\Model
      */
-    public function show(Movie $movie)
+    public function show(int $movie): Model
     {
-        //
+        return Movie::with('genres')
+            ->findOrFail($movie);
     }
 
     /**

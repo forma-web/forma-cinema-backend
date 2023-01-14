@@ -48,5 +48,3 @@ Route::middleware('auth')->group(function () {
     Route::apiResource('movies', MovieController::class);
     Route::get('views', ViewController::class)->name('views');
 });
-
-

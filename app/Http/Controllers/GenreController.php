@@ -17,7 +17,7 @@ class GenreController extends Controller
      */
     public function index(): CursorPaginator
     {
-        return Genre::orderBy('id')->cursorPaginate(1);
+        return Genre::orderBy('id')->cursorPaginate(10);
     }
 
     /**
