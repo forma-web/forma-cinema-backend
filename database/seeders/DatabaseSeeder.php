@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         foreach (range(1, 3) as $i) {
-            $genres = Genre::factory()->count(20)->create();
+            $genres = Genre::factory()->count(6)->create();
         }
 
         User::factory()

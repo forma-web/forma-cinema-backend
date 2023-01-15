@@ -65,6 +65,18 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     }
 
     /**
+     * Mark the given user's email as unverified.
+     *
+     * @return bool
+     */
+    public function markEmailAsUnverified()
+    {
+        return $this->forceFill([
+            'email_verified_at' => null,
+        ])->save();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function views(): BelongsToMany
@@ -84,14 +96,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     }
 
     /**
-     * Mark the given user's email as unverified.
-     *
-     * @return bool
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function markEmailAsUnverified()
+    public function movies(): HasMany
     {
-        return $this->forceFill([
-            'email_verified_at' => null,
-        ])->save();
+        return $this->hasMany(Movie::class);
     }
 }

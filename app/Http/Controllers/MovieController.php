@@ -6,18 +6,19 @@ use App\Filters\MovieFilter;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Models\Movie;
+use App\Models\User;
 use Illuminate\Contracts\Pagination\CursorPaginator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MovieController extends Controller
 {
-    public function index(MovieFilter $filter): CursorPaginator
+    public function index(): CursorPaginator
     {
-        return Movie::filter($filter)
-            ->with('genres')
+        return $this->myMovies()
             ->orderBy('id')
             ->latest()
-            ->cursorPaginate(10);
+            ->cursorPaginate(config('common.pagination.per_page'));
     }
 
     /**
@@ -40,8 +41,7 @@ class MovieController extends Controller
      */
     public function show(int $id): Model
     {
-        return Movie::with('genres')
-            ->findOrFail($id);
+        return $this->myMovies()->findOrFail($id);
     }
 
     /**
@@ -76,5 +76,13 @@ class MovieController extends Controller
     public function destroy(Movie $movie)
     {
         //
+    }
+
+    private function myMovies(): HasMany
+    {
+        /** @var User $user */
+        $user = auth()->user();
+
+        return $user->movies();
     }
 }

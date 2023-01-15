@@ -409,6 +409,9 @@ class MovieSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('movies')->insert(self::MOVIES);
+        \DB::table('movies')->insert(array_map(function ($movie) {
+            $movie['user_id'] = 1;
+            return $movie;
+        }, self::MOVIES));
     }
 }
