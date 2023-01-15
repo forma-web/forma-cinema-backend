@@ -8,9 +8,6 @@ use Illuminate\Contracts\Pagination\CursorPaginator;
 
 class ViewController extends Controller
 {
-    // Views history
-    // Continue watching
-
     /**
      * @return string
      */

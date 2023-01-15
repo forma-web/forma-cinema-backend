@@ -76,12 +76,4 @@ class Movie extends Model
     {
         return $this->belongsToMany(Genre::class, GenreMovie::class);
     }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function selections(): BelongsToMany
-    {
-        return $this->belongsToMany(Selection::class, MovieSelection::class);
-    }
 }
