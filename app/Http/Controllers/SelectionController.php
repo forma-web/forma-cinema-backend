@@ -82,7 +82,7 @@ class SelectionController extends Controller
         /** @var User $user */
         $user = auth()->user();
 
-        $selection = $user->selections()->findOrFail($selection)->delete();
+        $user->selections()->findOrFail($selection)->delete();
 
         return response()->noContent();
     }

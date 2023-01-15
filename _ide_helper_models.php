@@ -59,18 +59,20 @@ namespace App\Models{
  * @property string $name
  * @property int|null $year
  * @property string|null $country
- * @property string|null $age_restrictions
+ * @property \App\Enums\RussianAgesEnum|null $age_restrictions
  * @property int $duration
  * @property string|null $logline
  * @property string|null $description
  * @property string|null $poster
  * @property string|null $trailer
- * @property string|null $kinopoisk_id
+ * @property int|null $kinopoisk_id
  * @property float|null $kinopoisk_rating
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Genre[] $genres
  * @property-read int|null $genres_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Selection[] $selections
+ * @property-read int|null $selections_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $series
  * @property-read int|null $series_count
  * @method static \Database\Factories\MovieFactory factory(...$parameters)
@@ -123,6 +125,8 @@ namespace App\Models{
  * @property string|null $thumbnail
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Movie[] $movies
+ * @property-read int|null $movies_count
  * @method static \Database\Factories\SelectionFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Selection newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Selection newQuery()
@@ -148,6 +152,7 @@ namespace App\Models{
  * @property string|null $image
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Movie|null $movie
  * @method static \Database\Factories\SeriesFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Series newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Series newQuery()
@@ -178,6 +183,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Selection[] $selections
+ * @property-read int|null $selections_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $views
  * @property-read int|null $views_count
  * @method static \Database\Factories\UserFactory factory(...$parameters)

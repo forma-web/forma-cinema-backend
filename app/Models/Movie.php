@@ -19,6 +19,7 @@ class Movie extends Model
      * @var array<int, string>
      */
     protected $hidden = [
+        'pivot',
         'created_at',
         'updated_at',
     ];
@@ -32,6 +33,13 @@ class Movie extends Model
         'age_restrictions' => RussianAgesEnum::class,
         'kinopoisk_rating' => 'float',
     ];
+
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = ['genres'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
