@@ -8,7 +8,7 @@ use Illuminate\Contracts\Pagination\CursorPaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 
-class SelectionMoviesController extends Controller
+class SelectionMovieController extends Controller
 {
     /**
      * Display a listing of the resource.

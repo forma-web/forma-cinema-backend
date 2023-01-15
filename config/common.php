@@ -14,4 +14,8 @@ return [
     'pagination' => [
         'per_page' => 10,
     ],
+
+    'genres' => [
+        'max' => 3,
+    ]
 ];

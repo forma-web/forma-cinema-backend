@@ -62,14 +62,6 @@ class Movie extends Model
     protected $with = ['genres'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function genres(): BelongsToMany
-    {
-        return $this->belongsToMany(Genre::class, GenreMovie::class)->withTimestamps();
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function series(): HasMany
@@ -80,8 +72,16 @@ class Movie extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
+    public function genres(): BelongsToMany
+    {
+        return $this->belongsToMany(Genre::class, GenreMovie::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function selections(): BelongsToMany
     {
-        return $this->belongsToMany(Selection::class, MovieSelection::class)->withTimestamps();
+        return $this->belongsToMany(Selection::class, MovieSelection::class);
     }
 }

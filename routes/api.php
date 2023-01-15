@@ -3,8 +3,9 @@
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\GenreMovieController;
 use App\Http\Controllers\SelectionController;
-use App\Http\Controllers\SelectionMoviesController;
+use App\Http\Controllers\SelectionMovieController;
 use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,9 +49,10 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::apiResource('selections', SelectionController::class);
-    Route::apiResource('selections.movies', SelectionMoviesController::class)->except(['show', 'store']);
+    Route::apiResource('selections.movies', SelectionMovieController::class)->except(['show', 'store']);
 
     Route::apiResource('genres', GenreController::class)->except(['store', 'update', 'destroy']);
+    Route::apiResource('genres.movies', GenreMovieController::class)->except(['show', 'store']);
 
     Route::apiResource('movies', MovieController::class);
 
