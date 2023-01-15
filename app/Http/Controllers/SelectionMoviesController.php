@@ -18,7 +18,7 @@ class SelectionMoviesController extends Controller
      */
     public function index(int $selection): CursorPaginator
     {
-        return $this->getSelection($selection)->movies()->cursorPaginate();
+        return $this->getSelection($selection)->movies()->cursorPaginate(config('common.pagination.per_page'));
     }
 
     /**

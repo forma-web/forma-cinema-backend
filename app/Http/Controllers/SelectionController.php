@@ -21,7 +21,7 @@ class SelectionController extends Controller
         /** @var User $user */
         $user = auth()->user();
 
-        return $user->selections()->cursorPaginate();
+        return $user->selections()->cursorPaginate(config('common.pagination.per_page'));
     }
 
     /**

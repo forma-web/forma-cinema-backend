@@ -42,18 +42,15 @@ Route::controller(AuthenticationController::class)
     });
 
 Route::middleware('auth')->group(function () {
+    Route::prefix('user')->as('user.')->group(function () {
+        Route::get('', [AuthenticationController::class, 'current'])->name('current');
+        Route::patch('', [AuthenticationController::class, 'updateCredentials'])->name('update');
+    });
+
     Route::apiResource('selections', SelectionController::class);
     Route::apiResource('selections.movies', SelectionMoviesController::class)->except(['show', 'store']);
 
     Route::apiResource('genres', GenreController::class)->except(['store', 'update', 'destroy']);
-
-    Route::prefix('user')
-        ->as('user.')
-        ->group(function () {
-            Route::get('', [AuthenticationController::class, 'current'])->name('current');
-            Route::patch('', [AuthenticationController::class, 'updateCredentials'])->name('update');
-        });
-
 
     Route::apiResource('movies', MovieController::class);
     Route::get('views', ViewController::class)->name('views');
