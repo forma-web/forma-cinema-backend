@@ -14,12 +14,32 @@ class Movie extends Model
     use HasFactory, Filterable;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'year',
+        'country',
+        'age_restriction',
+        'duration',
+        'logline',
+        'description',
+        'poster',
+        'trailer',
+        'kinopoisk_id',
+        'kinopoisk_rating',
+    ];
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
     protected $hidden = [
         'pivot',
+        'user_id',
         'created_at',
         'updated_at',
     ];

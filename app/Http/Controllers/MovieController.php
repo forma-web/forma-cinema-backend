@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Contracts\Pagination\CursorPaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\Response;
 
 class MovieController extends Controller
 {
@@ -25,11 +26,11 @@ class MovieController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreMovieRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Database\Eloquent\Model
      */
-    public function store(StoreMovieRequest $request)
+    public function store(StoreMovieRequest $request): Model
     {
-        //
+        return $this->myMovies()->create($request->validated());
     }
 
     /**
@@ -45,37 +46,32 @@ class MovieController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Movie  $movie
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Movie $movie)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateMovieRequest  $request
-     * @param  \App\Models\Movie  $movie
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\UpdateMovieRequest $request
+     * @param int $movie
+     * @return \Illuminate\Database\Eloquent\Model
      */
-    public function update(UpdateMovieRequest $request, Movie $movie)
+    public function update(UpdateMovieRequest $request, int $movie): Model
     {
-        //
+        $movie = $this->myMovies()->findOrFail($movie);
+
+        $movie->update($request->validated());
+
+        return $movie;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Movie  $movie
+     * @param int $movie
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Movie $movie)
+    public function destroy(int $movie): Response
     {
-        //
+        $this->myMovies()->findOrFail($movie)->delete();
+
+        return response()->noContent();
     }
 
     private function myMovies(): HasMany

@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::apiResource('genres', GenreController::class)->except(['store', 'update', 'destroy']);
 
     Route::apiResource('movies', MovieController::class);
+
     Route::get('views', ViewController::class)->name('views');
 });
 
