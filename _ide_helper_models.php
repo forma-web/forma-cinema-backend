@@ -76,8 +76,6 @@ namespace App\Models{
  * @property-read int|null $genres_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $series
  * @property-read int|null $series_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $views
- * @property-read int|null $views_count
  * @method static \Database\Factories\MovieFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie filter(\App\Filters\QueryFilter $filters)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie newModelQuery()
@@ -157,6 +155,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Movie|null $movie
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $views
+ * @property-read int|null $views_count
  * @method static \Database\Factories\SeriesFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Series newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Series newQuery()

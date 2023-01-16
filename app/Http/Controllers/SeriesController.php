@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSeriesRequest;
+use App\Http\Requests\TimingRequest;
 use App\Http\Requests\UpdateSeriesRequest;
 use App\Models\Movie;
+use App\Models\Series;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\CursorPaginator;
 use Illuminate\Database\Eloquent\Model;
@@ -90,6 +92,29 @@ class SeriesController extends Controller
             ->series()
             ->findOrFail($seriesId)
             ->delete();
+
+        return response()->noContent();
+    }
+
+    /**
+     * @param \App\Http\Requests\TimingRequest $request
+     * @param int $movieId
+     * @param int $seriesId
+     * @return \Illuminate\Http\Response
+     */
+    public function updateTiming(TimingRequest $request, int $movieId, int $seriesId): Response
+    {
+        $params = collect($request->validated());
+
+        /** @var Series $series */
+        $series = $this
+            ->myMovies($movieId)
+            ->series()
+            ->findOrFail($seriesId);
+
+        $series->updateTiming(
+            $params->only(['seek', 'finished'])->toArray(),
+        );
 
         return response()->noContent();
     }

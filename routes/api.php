@@ -58,6 +58,12 @@ Route::middleware('auth')->group(function () {
     Route::apiResource('movies', MovieController::class);
     Route::apiResource('movies.series', SeriesController::class);
 
+    Route::prefix('movies/{movie}/series/{series}/history')
+        ->as('movies.series.history.')
+        ->group(function () {
+            Route::put('', [SeriesController::class, 'updateTiming'])->name('update');
+        });
+
     Route::get('history', ViewController::class)->name('history');
 });
 

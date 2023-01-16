@@ -38,6 +38,9 @@ class Selection extends Model
      */
     protected $casts = [];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function movies(): BelongsToMany
     {
         return $this->belongsToMany(Movie::class, MovieSelection::class);

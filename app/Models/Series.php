@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Series extends Model
 {
@@ -39,8 +40,33 @@ class Series extends Model
      */
     protected $casts = [];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function movie(): BelongsTo
     {
         return $this->belongsTo(Movie::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function views(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, View::class)
+            ->withPivot('seek', 'finished')
+            ->withTimestamps()
+            ->as('timing');
+    }
+
+    /**
+     * @param array $timing
+     * @return $this
+     */
+    public function updateTiming(array $timing): Series
+    {
+        $this->views()->syncWithPivotValues([auth()->id()], $timing);
+
+        return $this;
     }
 }

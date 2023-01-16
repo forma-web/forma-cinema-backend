@@ -12,7 +12,7 @@ class UpdateMovieRequest extends BaseFormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => ['string', 'max:255'],
