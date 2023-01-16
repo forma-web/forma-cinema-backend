@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignIdFor(Series::class);
             $table->unsignedBigInteger('seek')->nullable();
             $table->boolean('finished')->default(false);
+            $table->boolean('hidden')->default(false);
             $table->timestamps();
         });
     }

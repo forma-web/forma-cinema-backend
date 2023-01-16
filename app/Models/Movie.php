@@ -14,11 +14,32 @@ class Movie extends Model
     use HasFactory, Filterable;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'year',
+        'country',
+        'age_restriction',
+        'duration',
+        'logline',
+        'description',
+        'poster',
+        'trailer',
+        'kinopoisk_id',
+        'kinopoisk_rating',
+    ];
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
     protected $hidden = [
+        'pivot',
+        'user_id',
         'created_at',
         'updated_at',
     ];
@@ -34,12 +55,11 @@ class Movie extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * The relations to eager load on every query.
+     *
+     * @var array
      */
-    public function genres(): BelongsToMany
-    {
-        return $this->belongsToMany(Genre::class, GenreMovie::class)->withTimestamps();
-    }
+    protected $with = ['genres'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -52,8 +72,8 @@ class Movie extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function selections(): BelongsToMany
+    public function genres(): BelongsToMany
     {
-        return $this->belongsToMany(Selection::class, MovieSelection::class)->withTimestamps();
+        return $this->belongsToMany(Genre::class, GenreMovie::class);
     }
 }

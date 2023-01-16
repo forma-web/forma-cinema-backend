@@ -2,34 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\ViewModesEnum;
+use App\Filters\ViewFilter;
 use App\Models\User;
+use App\Models\View;
 use Illuminate\Contracts\Pagination\CursorPaginator;
+use Illuminate\Http\Response;
 
 class ViewController extends Controller
 {
-    // Views history
-    // Continue watching
-
     /**
-     * @return string
+     * @param \App\Filters\ViewFilter $filter
+     * @return \Illuminate\Contracts\Pagination\CursorPaginator
      */
-    public function __invoke(): CursorPaginator
+    public function show(ViewFilter $filter): CursorPaginator
     {
         /** @var User $user */
         $user = auth()->user();
 
-        $mode =  \request()->get('mode', ViewModesEnum::CONTINUE->value);
-
-        $views = $user
-            ->views()
-            ->with('movie')
+        return $user
+            ->series()
+            ->filterRelation($filter)
             ->orderByPivot('created_at', 'desc')
-            ->orderByPivot('id');
+            ->orderByPivot('id')
+            ->with('movie')
+            ->cursorPaginate();
+    }
 
-        if ($mode === ViewModesEnum::CONTINUE->value)
-            $views = $views->wherePivot('finished', false);
+    /**
+     * @param int $view
+     * @return \Illuminate\Http\Response
+     */
+    public function hide(int $view): Response
+    {
+        /** @var User $user */
+        $user = auth()->user();
 
-        return $views->cursorPaginate();
+        /** @var View $view */
+        $view = $user->views()->findOrFail($view);
+
+        $view->hide();
+
+        return response()->noContent();
     }
 }

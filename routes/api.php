@@ -3,7 +3,10 @@
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\GenreMovieController;
 use App\Http\Controllers\SelectionController;
+use App\Http\Controllers\SelectionMovieController;
+use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,16 +44,32 @@ Route::controller(AuthenticationController::class)
     });
 
 Route::middleware('auth')->group(function () {
+    Route::prefix('user')->as('user.')->group(function () {
+        Route::get('', [AuthenticationController::class, 'current'])->name('current');
+        Route::patch('', [AuthenticationController::class, 'updateCredentials'])->name('update');
+    });
+
     Route::apiResource('selections', SelectionController::class);
+    Route::apiResource('selections.movies', SelectionMovieController::class)->except(['show', 'store']);
 
-    Route::prefix('user')
-        ->as('user.')
-        ->group(function () {
-            Route::get('', [AuthenticationController::class, 'current'])->name('current');
-            Route::patch('', [AuthenticationController::class, 'updateCredentials'])->name('update');
-        });
+    Route::apiResource('genres', GenreController::class)->except(['store', 'update', 'destroy']);
+    Route::apiResource('genres.movies', GenreMovieController::class)->except(['show', 'store']);
 
-    Route::apiResource('genres', GenreController::class);
     Route::apiResource('movies', MovieController::class);
-    Route::get('views', ViewController::class)->name('views');
+    Route::apiResource('movies.series', SeriesController::class);
+
+    Route::put(
+        'movies/{movie}/series/{series}/history',
+        [SeriesController::class, 'updateTiming']
+    )->name('movies.series.history.update');
+
+    Route::prefix('history')->as('history.')->group(function () {
+        Route::get('', [ViewController::class, 'show'])->name('show');
+        Route::patch('{history}', [ViewController::class, 'hide'])->name('hide');
+    });
 });
+
+Route::post('upload', function (\Illuminate\Http\Request $request) {
+    $request->file('file')->store('movies');
+    info(print_r($request->all(), true));
+})->name('upload');

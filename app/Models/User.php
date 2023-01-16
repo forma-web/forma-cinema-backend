@@ -65,24 +65,6 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function views(): BelongsToMany
-    {
-        return $this->belongsToMany(Series::class, View::class)
-            ->withPivot('seek', 'finished')
-            ->withTimestamps()
-            ->as('info');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function selections(): HasMany
-    {
-        return $this->hasMany(Selection::class);
-    }
-    
      * Mark the given user's email as unverified.
      *
      * @return bool
@@ -92,5 +74,40 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return $this->forceFill([
             'email_verified_at' => null,
         ])->save();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function series(): BelongsToMany
+    {
+        return $this->belongsToMany(Series::class, View::class)
+            ->withPivot('seek', 'finished')
+            ->withTimestamps()
+            ->as('timing');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function views(): HasMany
+    {
+        return $this->hasMany(View::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function selections(): HasMany
+    {
+        return $this->hasMany(Selection::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function movies(): HasMany
+    {
+        return $this->hasMany(Movie::class);
     }
 }

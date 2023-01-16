@@ -9,10 +9,12 @@ class UpdateSeriesRequest extends BaseFormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'name' => ['string', 'max:255'],
+            'description' => ['string', 'max:280'],
+            'poster' => ['string', 'max:1000'],
         ];
     }
 }

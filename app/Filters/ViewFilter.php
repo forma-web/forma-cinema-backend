@@ -16,12 +16,16 @@ class ViewFilter extends QueryFilter
     }
 
     /**
-     * @param int $year
+     * @param string $mode
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function mode(ViewModesEnum $mode): Builder
+    public function mode(string $mode): Builder
     {
-        dd($mode);
-        return $this->builder->where('year', '>=', $year);
+        $continueMode = $mode === ViewModesEnum::CONTINUE->value;
+
+        if ($continueMode)
+            $this->builder->where('hidden', false);
+
+        return $this->builder->where('finished', !$continueMode);
     }
 }

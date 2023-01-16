@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Selection extends Model
 {
@@ -36,4 +37,12 @@ class Selection extends Model
      * @var array<string, string>
      */
     protected $casts = [];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function movies(): BelongsToMany
+    {
+        return $this->belongsToMany(Movie::class, MovieSelection::class);
+    }
 }
