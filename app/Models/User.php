@@ -84,7 +84,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return $this->belongsToMany(Series::class, View::class)
             ->withPivot('seek', 'finished')
             ->withTimestamps()
-            ->as('info');
+            ->as('timing');
     }
 
     /**

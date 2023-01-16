@@ -2,30 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\ViewModesEnum;
+use App\Filters\ViewFilter;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\CursorPaginator;
 
 class ViewController extends Controller
 {
     /**
-     * @return string
+     * @param \App\Filters\ViewFilter $filter
+     * @return \Illuminate\Contracts\Pagination\CursorPaginator
      */
-    public function __invoke(): CursorPaginator
+    public function __invoke(ViewFilter $filter): CursorPaginator
     {
         /** @var User $user */
         $user = auth()->user();
 
-        $mode =  \request()->get('mode', ViewModesEnum::CONTINUE->value);
-
         $views = $user
             ->views()
-            ->with('movie')
+            ->filter($filter)
             ->orderByPivot('created_at', 'desc')
-            ->orderByPivot('id');
-
-        if ($mode === ViewModesEnum::CONTINUE->value)
-            $views = $views->wherePivot('finished', false);
+            ->orderByPivot('id')
+            ->with('movie');
 
         return $views->cursorPaginate();
     }

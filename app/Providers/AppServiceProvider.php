@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Filters\QueryFilter;
 use App\Models\User;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\URL;
@@ -64,6 +66,14 @@ class AppServiceProvider extends ServiceProvider
             ]);
 
             return config('app.frontend_url') . '?' . $params;
+        });
+
+        BelongsToMany::macro('filter', function (QueryFilter $filter): BelongsToMany {
+
+            /** @var BelongsToMany $this */
+            $filter->apply($this->getQuery());
+
+            return $this;
         });
 
         Model::shouldBeStrict(! $this->app->isProduction());

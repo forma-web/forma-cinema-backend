@@ -18586,6 +18586,36 @@
      
 }
 
+    namespace Illuminate\Database\Eloquent\Relations { 
+            /**
+     * 
+     *
+     */ 
+        class BelongsToMany {
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class Relation {
+                    /**
+         * 
+         *
+         * @see \App\Providers\AppServiceProvider::boot()
+         * @param \App\Filters\QueryFilter $filter
+         * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany 
+         * @static 
+         */ 
+        public static function filter($filter)
+        {
+                        return \Illuminate\Database\Eloquent\Relations\Relation::filter($filter);
+        }
+         
+    }
+     
+}
+
     namespace PHPOpenSourceSaver\JWTAuth\Claims { 
             /**
      * 

@@ -18,6 +18,8 @@ namespace App\Models{
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Movie[] $movies
+ * @property-read int|null $movies_count
  * @method static \Database\Factories\GenreFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Genre newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Genre newQuery()
@@ -56,6 +58,7 @@ namespace App\Models{
  * App\Models\Movie
  *
  * @property int $id
+ * @property int $user_id
  * @property string $name
  * @property int|null $year
  * @property string|null $country
@@ -71,8 +74,6 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Genre[] $genres
  * @property-read int|null $genres_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Selection[] $selections
- * @property-read int|null $selections_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $series
  * @property-read int|null $series_count
  * @method static \Database\Factories\MovieFactory factory(...$parameters)
@@ -93,6 +94,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Movie wherePoster($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereTrailer($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Movie whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereYear($value)
  */
 	class Movie extends \Eloquent {}
@@ -181,6 +183,8 @@ namespace App\Models{
  * @property string $password
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Movie[] $movies
+ * @property-read int|null $movies_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Selection[] $selections

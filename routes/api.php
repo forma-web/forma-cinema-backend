@@ -54,9 +54,11 @@ Route::middleware('auth')->group(function () {
     Route::apiResource('genres', GenreController::class)->except(['store', 'update', 'destroy']);
     Route::apiResource('genres.movies', GenreMovieController::class)->except(['show', 'store']);
 
-    Route::apiResource('movies', MovieController::class);
+    Route::prefix('movies')->as('movies.')->group(function () {
+        Route::apiResource('', MovieController::class);
+    });
 
-    Route::get('views', ViewController::class)->name('views');
+    Route::get('history', ViewController::class)->name('history');
 });
 
 //Route::post('upload', function (\Illuminate\Http\Request $request) {

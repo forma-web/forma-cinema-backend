@@ -33,6 +33,7 @@ class View extends Pivot
      * @var array<int, string>
      */
     protected $hidden = [
+        'hidden',
         'user_id',
         'series_id',
         'created_at',
