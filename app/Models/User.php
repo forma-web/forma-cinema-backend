@@ -79,12 +79,20 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function views(): BelongsToMany
+    public function series(): BelongsToMany
     {
         return $this->belongsToMany(Series::class, View::class)
             ->withPivot('seek', 'finished')
             ->withTimestamps()
             ->as('timing');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function views(): HasMany
+    {
+        return $this->hasMany(View::class);
     }
 
     /**

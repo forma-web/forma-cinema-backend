@@ -58,13 +58,15 @@ Route::middleware('auth')->group(function () {
     Route::apiResource('movies', MovieController::class);
     Route::apiResource('movies.series', SeriesController::class);
 
-    Route::prefix('movies/{movie}/series/{series}/history')
-        ->as('movies.series.history.')
-        ->group(function () {
-            Route::put('', [SeriesController::class, 'updateTiming'])->name('update');
-        });
+    Route::put(
+        'movies/{movie}/series/{series}/history',
+        [SeriesController::class, 'updateTiming']
+    )->name('movies.series.history.update');
 
-    Route::get('history', ViewController::class)->name('history');
+    Route::prefix('history')->as('history.')->group(function () {
+        Route::get('', [ViewController::class, 'show'])->name('show');
+        Route::patch('{history}', [ViewController::class, 'hide'])->name('hide');
+    });
 });
 
 Route::post('upload', function (\Illuminate\Http\Request $request) {

@@ -18607,9 +18607,9 @@
          * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany 
          * @static 
          */ 
-        public static function filter($filter)
+        public static function filterRelation($filter)
         {
-                        return \Illuminate\Database\Eloquent\Relations\Relation::filter($filter);
+                        return \Illuminate\Database\Eloquent\Relations\Relation::filterRelation($filter);
         }
          
     }

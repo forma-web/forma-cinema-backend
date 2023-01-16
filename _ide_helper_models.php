@@ -191,7 +191,9 @@ namespace App\Models{
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Selection[] $selections
  * @property-read int|null $selections_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $views
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $series
+ * @property-read int|null $series_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\View[] $views
  * @property-read int|null $views_count
  * @method static \Database\Factories\UserFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|User filter(\App\Filters\QueryFilter $filters)

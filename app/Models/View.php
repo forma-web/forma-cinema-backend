@@ -46,4 +46,16 @@ class View extends Pivot
      * @var array<string, string>
      */
     protected $casts = [];
+
+    /**
+     * @return $this
+     */
+    public function hide(): View
+    {
+        $this->forceFill([
+            'hidden' => true
+        ])->save();
+
+        return $this;
+    }
 }

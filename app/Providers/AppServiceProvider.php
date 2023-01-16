@@ -68,7 +68,7 @@ class AppServiceProvider extends ServiceProvider
             return config('app.frontend_url') . '?' . $params;
         });
 
-        BelongsToMany::macro('filter', function (QueryFilter $filter): BelongsToMany {
+        BelongsToMany::macro('filterRelation', function (QueryFilter $filter): BelongsToMany {
 
             /** @var BelongsToMany $this */
             $filter->apply($this->getQuery());
