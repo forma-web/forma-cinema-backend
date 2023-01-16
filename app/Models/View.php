@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class View extends Pivot
+final class View extends Pivot
 {
     /**
      * Indicates if the IDs are auto-incrementing.

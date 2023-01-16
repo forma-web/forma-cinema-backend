@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Filters\Filterable;
+use App\Notifications\VerifyEmailQueued;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -11,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject, MustVerifyEmail
+final class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
     use HasFactory, Notifiable, Filterable;
 
@@ -65,11 +66,21 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     }
 
     /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new VerifyEmailQueued);
+    }
+
+    /**
      * Mark the given user's email as unverified.
      *
      * @return bool
      */
-    public function markEmailAsUnverified()
+    public function markEmailAsUnverified(): bool
     {
         return $this->forceFill([
             'email_verified_at' => null,

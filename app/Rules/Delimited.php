@@ -173,9 +173,9 @@ class Delimited implements Rule
     }
 
     /**
-     * @return mixed|string
+     * @return string
      */
-    public function message()
+    public function message(): string
     {
         return $this->message;
     }

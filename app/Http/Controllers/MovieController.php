@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\MovieFilter;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
-use App\Models\Movie;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\CursorPaginator;
 use Illuminate\Database\Eloquent\Model;
