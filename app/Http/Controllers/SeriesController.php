@@ -4,83 +4,105 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSeriesRequest;
 use App\Http\Requests\UpdateSeriesRequest;
-use App\Models\Series;
+use App\Models\Movie;
+use App\Models\User;
+use Illuminate\Contracts\Pagination\CursorPaginator;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
 
 class SeriesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param int $movieId
+     * @return \Illuminate\Contracts\Pagination\CursorPaginator
      */
-    public function index()
+    public function index(int $movieId): CursorPaginator
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $this
+            ->myMovies($movieId)
+            ->series()
+            ->cursorPaginate(config('common.pagination.per_page'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreSeriesRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\StoreSeriesRequest $request
+     * @param int $movieId
+     * @return \Illuminate\Database\Eloquent\Model
      */
-    public function store(StoreSeriesRequest $request)
+    public function store(StoreSeriesRequest $request, int $movieId): Model
     {
-        //
+        return $this
+            ->myMovies($movieId)
+            ->series()
+            ->create($request->validated());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Series  $series
-     * @return \Illuminate\Http\Response
+     * @param int $movieId
+     * @param int $seriesId
+     * @return \Illuminate\Database\Eloquent\Model
      */
-    public function show(Series $series)
+    public function show(int $movieId, int $seriesId): Model
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Series  $series
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Series $series)
-    {
-        //
+        return $this
+            ->myMovies($movieId)
+            ->series()
+            ->findOrFail($seriesId);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateSeriesRequest  $request
-     * @param  \App\Models\Series  $series
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\UpdateSeriesRequest $request
+     * @param int $movieId
+     * @param int $seriesId
+     * @return \Illuminate\Database\Eloquent\Model
      */
-    public function update(UpdateSeriesRequest $request, Series $series)
+    public function update(UpdateSeriesRequest $request, int $movieId, int $seriesId): Model
     {
-        //
+        $series = $this
+            ->myMovies($movieId)
+            ->series()
+            ->findOrFail($seriesId);
+
+        $series->update($request->validated());
+
+        return $series;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Series  $series
+     * @param int $movieId
+     * @param int $seriesId
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Series $series)
+    public function destroy(int $movieId, int $seriesId): Response
     {
-        //
+        $this
+            ->myMovies($movieId)
+            ->series()
+            ->findOrFail($seriesId)
+            ->delete();
+
+        return response()->noContent();
+    }
+
+    /**
+     * @param int $movieId
+     * @return \App\Models\Movie
+     */
+    private function myMovies(int $movieId): Movie
+    {
+        /** @var User $user */
+        $user = auth()->user();
+
+        return $user->movies()->findOrFail($movieId);
     }
 }

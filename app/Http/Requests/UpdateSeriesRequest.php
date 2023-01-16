@@ -12,7 +12,9 @@ class UpdateSeriesRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['string', 'max:255'],
+            'description' => ['string', 'max:280'],
+            'poster' => ['string', 'max:1000'],
         ];
     }
 }

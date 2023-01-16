@@ -17,13 +17,12 @@ class ViewController extends Controller
         /** @var User $user */
         $user = auth()->user();
 
-        $views = $user
+        return $user
             ->views()
             ->filter($filter)
             ->orderByPivot('created_at', 'desc')
             ->orderByPivot('id')
-            ->with('movie');
-
-        return $views->cursorPaginate();
+            ->with('movie')
+            ->cursorPaginate();
     }
 }

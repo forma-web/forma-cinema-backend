@@ -74,6 +74,9 @@ class MovieController extends Controller
         return response()->noContent();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     private function myMovies(): HasMany
     {
         /** @var User $user */

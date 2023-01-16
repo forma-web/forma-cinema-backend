@@ -76,6 +76,8 @@ namespace App\Models{
  * @property-read int|null $genres_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Series[] $series
  * @property-read int|null $series_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $views
+ * @property-read int|null $views_count
  * @method static \Database\Factories\MovieFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie filter(\App\Filters\QueryFilter $filters)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie newModelQuery()
@@ -218,6 +220,7 @@ namespace App\Models{
  * @property int $series_id
  * @property int|null $seek
  * @property bool $finished
+ * @property bool $hidden
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|View newModelQuery()
@@ -225,6 +228,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|View query()
  * @method static \Illuminate\Database\Eloquent\Builder|View whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|View whereFinished($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|View whereHidden($value)
  * @method static \Illuminate\Database\Eloquent\Builder|View whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|View whereSeek($value)
  * @method static \Illuminate\Database\Eloquent\Builder|View whereSeriesId($value)

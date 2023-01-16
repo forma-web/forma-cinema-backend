@@ -6,6 +6,7 @@ use App\Http\Controllers\MovieController;
 use App\Http\Controllers\GenreMovieController;
 use App\Http\Controllers\SelectionController;
 use App\Http\Controllers\SelectionMovieController;
+use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
 
@@ -54,14 +55,13 @@ Route::middleware('auth')->group(function () {
     Route::apiResource('genres', GenreController::class)->except(['store', 'update', 'destroy']);
     Route::apiResource('genres.movies', GenreMovieController::class)->except(['show', 'store']);
 
-    Route::prefix('movies')->as('movies.')->group(function () {
-        Route::apiResource('', MovieController::class);
-    });
+    Route::apiResource('movies', MovieController::class);
+    Route::apiResource('movies.series', SeriesController::class);
 
     Route::get('history', ViewController::class)->name('history');
 });
 
-//Route::post('upload', function (\Illuminate\Http\Request $request) {
-//    $request->file('file')->store('movies');
-//    info(print_r($request->all(), true));
-//})->name('upload');
+Route::post('upload', function (\Illuminate\Http\Request $request) {
+    $request->file('file')->store('movies');
+    info(print_r($request->all(), true));
+})->name('upload');
