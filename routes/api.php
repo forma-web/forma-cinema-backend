@@ -69,7 +69,30 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+Route::post('generate', function () {
+
+    $uuid = 'uploads_' . \Illuminate\Support\Str::uuid();
+
+    $chunks = [
+        ['id' => 1, 'path' => '/tmp' . \Illuminate\Support\Str::random(10)],
+        ['id' => 2, 'path' => '/tmp' . \Illuminate\Support\Str::random(10)],
+        ['id' => 3, 'path' => '/tmp' . \Illuminate\Support\Str::random(10)],
+        ['id' => 4, 'path' => '/tmp' . \Illuminate\Support\Str::random(10)],
+        ['id' => 5, 'path' => '/tmp' . \Illuminate\Support\Str::random(10)],
+    ];
+
+    $chunks = collect($chunks)->shuffle();
+
+    $chunks->each(function ($chunk) use ($uuid) {
+        \Illuminate\Support\Facades\Redis::sadd($uuid, $chunk['path']);
+    });
+
+    dump(\Illuminate\Support\Facades\Redis::smembers($uuid));
+});
+
 Route::post('upload', function (\Illuminate\Http\Request $request) {
-    $request->file('file')->store('movies');
-    info(print_r($request->all(), true));
+    $file = $request->file('file');
+    info(print_r($file->getClientOriginalName(), true));
+    info(print_r($file->getFileInfo(), true));
+    $file->store('movies');
 })->name('upload');
