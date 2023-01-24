@@ -98,7 +98,7 @@ class AuthenticationController extends Controller
     public function refresh(): JsonResponse
     {
         /** @var string $token */
-        $token = auth()->refresh();
+        $token = auth()->refresh(true, true);
 
         return response()->json([
             'meta' => $this->withToken($token)

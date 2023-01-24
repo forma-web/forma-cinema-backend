@@ -27,9 +27,9 @@ Route::controller(AuthenticationController::class)
     ->group(function () {
         Route::post('register', 'register')->name('register');
 
-       Route::post('login', 'login')->name('login');
-       Route::post('logout', 'logout')->name('logout');
-       Route::post('refresh', 'refresh')->name('refresh');
+        Route::post('login', 'login')->name('login');
+        Route::post('logout', 'logout')->name('logout');
+        Route::post('refresh', 'refresh')->name('refresh');
 
         Route::middleware('auth')->group(function () {
             Route::prefix('email')->as('email.')->group(function () {
@@ -69,7 +69,34 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+Route::post('test', function () {
+});
+
 Route::post('upload', function (\Illuminate\Http\Request $request) {
-    $request->file('file')->store('movies');
-    info(print_r($request->all(), true));
+    $file = $request->file('file');
+    $rangeHeader = $request->header('Content-Range');
+
+//    info(json_encode([
+//        'list' => scandir('/tmp'),
+//        'file' => $file,
+//        'headers' => $request->headers->all(),
+//    ]));
+
+    abort_if(!$rangeHeader, 400, 'Missing Content-Range header');
+//    abort_if(!$chunkIndexHeader, 400, 'Missing X-Chunk-Index header');
+//    abort_if(!$fileTypeHeader, 400, 'Missing X-File-Type header');
+
+    $newName = $file->store('movies');
+
+    list(, , $end, $total) = parseContentRange($rangeHeader);
+
+//    if ($end === $total)
+//        \Illuminate\Support\Facades\Bus::batch(
+//            array_map(
+//                fn ($dimension) => new \App\Jobs\ConvertVideo($newName, $dimension),
+//                config('common.video.dimensions'),
+//            )
+//        )->dispatch();
+
+    response()->noContent();
 })->name('upload');
