@@ -15,11 +15,11 @@ class StoreMovieRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['string', 'max:255'],
             'year' => ['numeric', 'min:1895', 'max:2050'],
             'country' => ['string', 'max:255'],
             'age_restriction' => [new Enum(RussianAgesEnum::class)],
-            'duration' => ['required', 'numeric', 'min:1'],
+            'duration' => ['numeric', 'min:1'],
             'logline' => ['string', 'max:280'],
             'description' => ['string'],
             'poster' => ['string', 'max:1000'],

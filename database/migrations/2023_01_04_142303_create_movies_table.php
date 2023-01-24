@@ -18,18 +18,18 @@ return new class extends Migration
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->unsignedSmallInteger('year')->nullable();
             $table->string('country')->nullable();
             $table->enum('age_restrictions', RussianAgesEnum::values())->nullable();
-            $table->unsignedBigInteger('duration');
+            $table->unsignedBigInteger('duration')->nullable();
             $table->text('logline')->nullable();
             $table->text('description')->nullable();
-            // TODO: Replace string length
             $table->string('poster', 1000)->nullable();
-            $table->string('trailer')->nullable();
+            $table->string('trailer', 1000)->nullable();
             $table->unsignedBigInteger('kinopoisk_id')->nullable();
             $table->unsignedFloat('kinopoisk_rating')->nullable();
+            $table->boolean('is_published')->default(false);
             $table->timestamps();
         });
     }

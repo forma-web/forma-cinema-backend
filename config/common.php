@@ -27,4 +27,8 @@ return [
             ['width' => 3840, 'height' => 2160],
         ],
     ],
+
+    'dirty' => [
+      'series' => 1,
+    ],
 ];

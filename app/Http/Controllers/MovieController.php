@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
+use App\Models\Movie;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\CursorPaginator;
 use Illuminate\Database\Eloquent\Model;
@@ -28,7 +29,18 @@ class MovieController extends Controller
      */
     public function store(StoreMovieRequest $request): Model
     {
-        return $this->myMovies()->create($request->validated());
+        //return $this->myMovies()->create($request->validated());
+
+        // TODO: Automatically create a series for the movie, dirty hack for now
+        /** @var Movie $movie */
+        $movie = \DB::transaction(function () use ($request) {
+            $movie = $this->myMovies()->create($request->validated());
+            $movie->series()->create();
+
+            return $movie;
+        });
+
+        return $movie;
     }
 
     /**
