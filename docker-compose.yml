@@ -1,6 +1,6 @@
 version: '3'
 services:
-    web:
+    laravel.test:
         build:
             context: ./vendor/laravel/sail/runtimes/8.1
             dockerfile: Dockerfile
@@ -29,8 +29,13 @@ services:
             context: .
             dockerfile: docker/worker/Dockerfile
         image: worker
+        deploy:
+            mode: replicated
+            replicas: 1
         extra_hosts:
             - 'host.docker.internal:host-gateway'
+        volumes:
+            - '.:/var/www/html'
         networks:
             - sail
         depends_on:

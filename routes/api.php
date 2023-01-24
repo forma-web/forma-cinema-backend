@@ -27,9 +27,9 @@ Route::controller(AuthenticationController::class)
     ->group(function () {
         Route::post('register', 'register')->name('register');
 
-       Route::post('login', 'login')->name('login');
-       Route::post('logout', 'logout')->name('logout');
-       Route::post('refresh', 'refresh')->name('refresh');
+        Route::post('login', 'login')->name('login');
+        Route::post('logout', 'logout')->name('logout');
+        Route::post('refresh', 'refresh')->name('refresh');
 
         Route::middleware('auth')->group(function () {
             Route::prefix('email')->as('email.')->group(function () {
@@ -69,30 +69,34 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::post('generate', function () {
-
-    $uuid = 'uploads_' . \Illuminate\Support\Str::uuid();
-
-    $chunks = [
-        ['id' => 1, 'path' => '/tmp' . \Illuminate\Support\Str::random(10)],
-        ['id' => 2, 'path' => '/tmp' . \Illuminate\Support\Str::random(10)],
-        ['id' => 3, 'path' => '/tmp' . \Illuminate\Support\Str::random(10)],
-        ['id' => 4, 'path' => '/tmp' . \Illuminate\Support\Str::random(10)],
-        ['id' => 5, 'path' => '/tmp' . \Illuminate\Support\Str::random(10)],
-    ];
-
-    $chunks = collect($chunks)->shuffle();
-
-    $chunks->each(function ($chunk) use ($uuid) {
-        \Illuminate\Support\Facades\Redis::sadd($uuid, $chunk['path']);
-    });
-
-    dump(\Illuminate\Support\Facades\Redis::smembers($uuid));
+Route::post('test', function () {
 });
 
 Route::post('upload', function (\Illuminate\Http\Request $request) {
     $file = $request->file('file');
-    info(print_r($file->getClientOriginalName(), true));
-    info(print_r($file->getFileInfo(), true));
-    $file->store('movies');
+    $rangeHeader = $request->header('Content-Range');
+
+//    info(json_encode([
+//        'list' => scandir('/tmp'),
+//        'file' => $file,
+//        'headers' => $request->headers->all(),
+//    ]));
+
+    abort_if(!$rangeHeader, 400, 'Missing Content-Range header');
+//    abort_if(!$chunkIndexHeader, 400, 'Missing X-Chunk-Index header');
+//    abort_if(!$fileTypeHeader, 400, 'Missing X-File-Type header');
+
+    $newName = $file->store('movies');
+
+    list(, , $end, $total) = parseContentRange($rangeHeader);
+
+//    if ($end === $total)
+//        \Illuminate\Support\Facades\Bus::batch(
+//            array_map(
+//                fn ($dimension) => new \App\Jobs\ConvertVideo($newName, $dimension),
+//                config('common.video.dimensions'),
+//            )
+//        )->dispatch();
+
+    response()->noContent();
 })->name('upload');

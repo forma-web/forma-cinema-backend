@@ -22,8 +22,10 @@ ENV TZ=UTC
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-COPY . /var/www/html
-COPY --from=vendor /tmp/vendor/ /var/www/html/vendor/
+WORKDIR /var/www/html
+
+#COPY . .
+#COPY --from=vendor /tmp/vendor/ ./vendor/
 
 COPY $CONFIG_DIR/php.ini /usr/local/etc/php/
 COPY $CONFIG_DIR/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
@@ -37,7 +39,5 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pgsql pdo_pgsql opcache \
     && pecl install redis \
     && docker-php-ext-enable redis
-
-WORKDIR /var/www/html
 
 CMD ["php", "artisan", "queue:work"]
