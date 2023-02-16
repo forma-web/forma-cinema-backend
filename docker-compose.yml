@@ -2,7 +2,7 @@ version: '3'
 services:
     laravel.test:
         build:
-            context: ./vendor/laravel/sail/runtimes/8.1
+            context: build/8.1
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
@@ -19,6 +19,7 @@ services:
             XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
         volumes:
             - '.:/var/www/html'
+            - '/mnt/e/movies:/var/www/html/storage/app/movies'
         networks:
             - sail
         depends_on:
@@ -27,7 +28,7 @@ services:
     worker:
         build:
             context: .
-            dockerfile: docker/worker/Dockerfile
+            dockerfile: build/worker/Dockerfile
         image: worker
         deploy:
             mode: replicated
@@ -36,6 +37,7 @@ services:
             - 'host.docker.internal:host-gateway'
         volumes:
             - '.:/var/www/html'
+            - '/mnt/e/movies:/var/www/html/storage/app/movies'
         networks:
             - sail
         depends_on:
